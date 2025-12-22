@@ -1,10 +1,24 @@
-HELP.md
+### Maven / Build ###
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+### Spring Boot – Sensitive Config ###
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+*.env
+
+### SSL / Certificates / Keystores ###
+src/main/resources/ssl/aiven-truststore.jks
+*.jks
+*.p12s
+*.keystore
+
+### Logs ###
+*.log
+
+### STS / Eclipse ###
 .apt_generated
 .classpath
 .factorypath
