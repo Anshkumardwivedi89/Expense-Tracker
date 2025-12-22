@@ -21,6 +21,7 @@ public class Expense {
     private Long id;
 
     private String title;
+    private String budgetId;
     private Double amount;
     private LocalDate date;
     private String category;
