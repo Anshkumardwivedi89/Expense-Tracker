@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,11 +21,12 @@ public class BudgetService {
         b.setUserId(String.valueOf(userId));
         b.setCreatedAt(LocalDateTime.now());
         b.setAllocatedAmount(b.getAllocatedAmount());
+        b.setRemainingAmount(b.getAllocatedAmount());
 
         if("MONTHLY".equals(b.getPeriod())){
-            b.setResetOn(LocalDateTime.now().plusMonths(1));
+            b.setResetsOn(LocalDateTime.now().plusMonths(1));
         }else{
-            b.setResetOn(LocalDateTime.now().plusWeeks(1));
+            b.setResetsOn(LocalDateTime.now().plusWeeks(1));
         }
         return budgetRepo.save(b);
     }

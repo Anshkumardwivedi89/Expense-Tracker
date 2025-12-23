@@ -21,6 +21,7 @@ public class BudgetController {
 
     }
 
+    @GetMapping
     public List<Budget> getBudgets(@RequestParam Long userId){
         return budgetService.getBudgets(userId);
     }

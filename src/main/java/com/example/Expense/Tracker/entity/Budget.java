@@ -12,8 +12,10 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@Document(collation = "budgets")
+@Document(collection = "budgets")
 @AllArgsConstructor
+
+
 @Builder
 public class Budget {
 
@@ -34,6 +36,6 @@ public class Budget {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime resetOn;
+    private LocalDateTime resetsOn;
 
 }
