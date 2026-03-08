@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM maven:3.8.4-openjdk-17 as builder
+FROM maven:3.9.0-openjdk-17 as builder
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests -q
 
 # Stage 2: Runtime
-FROM openjdk:17-slim
+FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
@@ -32,10 +32,6 @@ ENV SPRING_PROFILES_ACTIVE=prod
 
 # Expose port
 EXPOSE 8080
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8080/actuator/health || exit 1
 
 # Run application
 ENTRYPOINT ["java", "-jar", "app.jar"]
