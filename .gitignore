@@ -11,7 +11,11 @@ src/main/resources/application-*.properties
 *.env
 
 ### SSL / Certificates / Keystores ###
-src/main/resources/ssl/aiven-truststore.jks
+# Allow Aiven truststore (public certificate)
+!src/main/resources/ssl/aiven-truststore.jks
+src/main/resources/ssl/*.p12
+src/main/resources/ssl/*.keystore
+src/main/resources/ssl/*.key
 *.jks
 *.p12s
 *.keystore
