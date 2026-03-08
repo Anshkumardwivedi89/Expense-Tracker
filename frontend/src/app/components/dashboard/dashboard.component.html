@@ -1,0 +1,185 @@
+<app-loader
+  #loaderComponent
+  [isLoading]="isLoading"
+  [message]="loaderMessage"
+></app-loader>
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Dashboard</h1>
+    <a routerLink="/categories" class="btn-secondary">📂 Manage Categories</a>
+  </div>
+
+  <!-- Summary Cards Section -->
+  <div *ngIf="summary" class="summary-section">
+    <div class="summary-grid">
+      <!-- Income Card -->
+      <div class="summary-card income">
+        <div class="summary-card-label">Total Income</div>
+        <div class="summary-card-value">₹{{ summary.totalIncome | number: '1.2-2' }}</div>
+      </div>
+
+      <!-- Expense Card -->
+      <div class="summary-card expense">
+        <div class="summary-card-label">Total Expense</div>
+        <div class="summary-card-value">₹{{ summary.totalExpense | number: '1.2-2' }}</div>
+      </div>
+
+      <!-- Balance Card -->
+      <div
+        class="summary-card balance"
+        [ngClass]="summary.currentBalance >= 0 ? 'positive' : 'negative'"
+      >
+        <div class="summary-card-label">Current Balance</div>
+        <div class="summary-card-value">₹{{ summary.currentBalance | number: '1.2-2' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Transactions Section -->
+  <div *ngIf="recent.length" class="recent-section">
+    <h2 class="section-title">Recent Transactions</h2>
+    <div class="transaction-list">
+      <div
+        *ngFor="let t of recent"
+        class="transaction-item"
+        [ngClass]="t.type.toLowerCase()"
+      >
+        <div class="transaction-left">
+          <div class="transaction-description">{{ t.description }}</div>
+          <div class="transaction-category">
+            {{ t.category?.name || 'Uncategorized' }}
+          </div>
+        </div>
+
+        <div class="transaction-middle">
+          <span class="transaction-date">{{ t.date }}</span>
+        </div>
+
+        <div class="transaction-right">
+          <span class="transaction-amount" [ngClass]="t.type.toLowerCase()">
+            {{ t.type === 'INCOME' ? '+' : '-' }}₹{{ t.amount | number: '1.2-2' }}
+          </span>
+          <button
+            (click)="deleteTransaction(t.id)"
+            class="btn-delete-tx"
+            [disabled]="deletingTransactionId === t.id"
+            [title]="deletingTransactionId === t.id ? 'Deleting...' : 'Delete'"
+          >
+            {{ deletingTransactionId === t.id ? '⏳' : '🗑️' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Transaction Section -->
+  <div class="form-section">
+    <h2 class="section-title">Add New Transaction</h2>
+    <form (ngSubmit)="add()" class="transaction-form">
+      <div class="form-grid">
+        <!-- Type Select -->
+        <div class="form-group">
+          <label for="type" class="form-label">Type</label>
+          <select
+            id="type"
+            [(ngModel)]="newTx.type"
+            name="type"
+            class="form-control"
+            [disabled]="addingTransaction"
+          >
+            <option [value]="transactionType.INCOME">Income</option>
+            <option [value]="transactionType.EXPENSE">Expense</option>
+          </select>
+        </div>
+
+        <!-- Category Select -->
+        <div class="form-group">
+          <label for="category" class="form-label">Category</label>
+          <select
+            id="category"
+            [(ngModel)]="newTx.category"
+            name="category"
+            class="form-control"
+            required
+            [disabled]="addingTransaction"
+          >
+            <option [ngValue]="null">-- Select Category --</option>
+            <option *ngFor="let c of filteredCategories" [ngValue]="c">
+              {{ c.name }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Amount Input -->
+        <div class="form-group">
+          <label for="amount" class="form-label">Amount</label>
+          <input
+            id="amount"
+            type="number"
+            [(ngModel)]="newTx.amount"
+            name="amount"
+            class="form-control"
+            placeholder="0.00"
+            required
+            min="0"
+            step="0.01"
+            [disabled]="addingTransaction"
+          />
+        </div>
+
+        <!-- Date Input -->
+        <div class="form-group">
+          <label for="date" class="form-label">Date</label>
+          <input
+            id="date"
+            type="date"
+            [(ngModel)]="newTx.date"
+            name="date"
+            class="form-control"
+            required
+            [disabled]="addingTransaction"
+          />
+        </div>
+
+        <!-- Description Input (Full Width) -->
+        <div class="form-group full-width">
+          <label for="description" class="form-label">Description</label>
+          <input
+            id="description"
+            type="text"
+            [(ngModel)]="newTx.description"
+            name="description"
+            class="form-control"
+            placeholder="Enter description"
+            required
+            [disabled]="addingTransaction"
+          />
+        </div>
+
+        <!-- SMS Notification Checkbox -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="sendSMSNotification"
+              name="sendSMS"
+              class="checkbox-input"
+              [disabled]="addingTransaction"
+            />
+            <span class="checkbox-text">Send SMS Notification</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="addingTransaction"
+      >
+        {{ addingTransaction ? '⏳ Adding...' : '➕ Add Transaction' }}
+      </button>
+    </form>
+  </div>
+</div>

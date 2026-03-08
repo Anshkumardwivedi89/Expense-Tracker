@@ -1,0 +1,229 @@
+@import '../../../styles/design-system.scss';
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: $gradient-screen;
+  padding: $spacing-lg;
+}
+
+.auth-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 420px;
+  padding: $spacing-2xl;
+  animation: slideUp 0.4s ease-out;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-xl;
+    max-width: 100%;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Logo
+.auth-logo {
+  text-align: center;
+  margin-bottom: $spacing-lg;
+
+  .logo-icon {
+    font-size: 48px;
+    display: inline-block;
+  }
+}
+
+// Title
+.auth-title {
+  font-size: $font-size-2xl;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 0 0 $spacing-xs 0;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  margin: 0 0 $spacing-lg 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+// Alerts
+.alert-error,
+.alert-success {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  border-radius: 8px;
+  margin-bottom: $spacing-lg;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-error {
+  background-color: rgba($color-danger, 0.1);
+  color: $color-danger;
+  border: 1px solid rgba($color-danger, 0.2);
+}
+
+.alert-success {
+  background-color: rgba($color-income, 0.1);
+  color: $color-income;
+  border: 1px solid rgba($color-income, 0.2);
+}
+
+.alert-icon {
+  font-size: $font-size-lg;
+}
+
+// Form
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.form-label {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $text-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.form-control {
+  @include input-base;
+  padding: 12px;
+  font-size: $font-size-base;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background-color: $bg-secondary;
+  color: $text-primary;
+  transition: all $transition-fast;
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $accent-blue;
+    box-shadow: 0 0 0 3px rgba($accent-blue, 0.1);
+    background-color: darken($bg-secondary, 2%);
+  }
+
+  &[readonly] {
+    background-color: $bg-primary;
+    cursor: not-allowed;
+    color: $text-secondary;
+  }
+
+  &:disabled {
+    background-color: $bg-primary;
+    color: $text-secondary;
+    cursor: not-allowed;
+  }
+}
+
+.form-hint {
+  font-size: $font-size-xs;
+  color: $text-muted;
+  margin-top: 4px;
+  display: block;
+}
+
+// Submit Button
+.btn-primary {
+  @include button-base;
+  background-color: $accent-blue;
+  color: white;
+  padding: 12px 24px;
+  font-size: $font-size-base;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all $transition-fast;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &:hover:not(:disabled) {
+    background-color: darken($accent-blue, 8%);
+    box-shadow: 0 8px 20px rgba($accent-blue, 0.3);
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: $bg-secondary;
+    color: $text-secondary;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// Footer
+.auth-footer {
+  margin: $spacing-2xl 0 0 0;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.auth-link {
+  font-weight: 600;
+  color: $accent-blue;
+  text-decoration: none;
+  transition: all $transition-fast;
+  display: inline;
+  margin-left: 4px;
+
+  &:hover {
+    color: lighten($accent-blue, 10%);
+    text-decoration: underline;
+  }
+}

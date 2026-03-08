@@ -1,0 +1,285 @@
+// ============================================
+// FINTECH DESIGN SYSTEM
+// Inspired by Stripe, Linear, Vercel
+// ============================================
+
+// COLOR PALETTE
+$color-primary-bg: #FFFFFF;
+$color-secondary-bg: #F5F5F5;
+$color-card-bg: #FFFFFF;
+$color-border: #000000;
+$color-hover-bg: #F0F0F0;
+$color-header-bg: #000000;
+$color-header-text: #FFFFFF;
+
+$color-primary-text: #000000;
+$color-secondary-text: #333333;
+$color-muted-text: #666666;
+
+$color-accent-blue: #3B82F6;
+$color-accent-blue-hover: #2563EB;
+
+// TRANSACTION COLORS
+$color-income: #3B82F6;
+$color-income-bg: rgba(59, 130, 246, 0.12);
+$color-expense: #EF4444;
+$color-expense-bg: rgba(239, 68, 68, 0.12);
+$color-balance: #3B82F6;
+$color-balance-hover: #2563EB;
+
+$color-success: #3B82F6;
+$color-success-hover: #2563EB;
+$color-danger: #EF4444;
+$color-danger-hover: #DC2626;
+
+// GRADIENT BACKGROUNDS
+$gradient-main: linear-gradient(135deg, #F0F4F8 0%, #E8EDF5 100%);
+$gradient-screen: linear-gradient(180deg, #FAFBFC 0%, #F0F4F8 50%, #E8EDF5 100%);
+
+// TYPOGRAPHY
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Inter', sans-serif;
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-2xl: 24px;
+$font-size-3xl: 32px;
+$font-size-4xl: 40px;
+
+// SPACING
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-xl: 24px;
+$space-2xl: 32px;
+$space-3xl: 48px;
+
+// BORDER RADIUS
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-full: 999px;
+
+// SHADOWS
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// TRANSITIONS
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+// BREAKPOINTS
+$breakpoint-xs: 320px;
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// SHORTHAND VARIABLE ALIASES (for component usage)
+// Background colors
+$bg-primary: $color-primary-bg;
+$bg-secondary: $color-secondary-bg;
+$bg-card: $color-card-bg;
+$bg-hover: $color-hover-bg;
+
+// Text colors
+$text-primary: $color-primary-text;
+$text-secondary: $color-secondary-text;
+$text-muted: $color-muted-text;
+$text-danger: $color-danger;
+
+// Accent colors
+$accent-blue: $color-accent-blue;
+
+// Border
+$border-color: $color-border;
+
+// Font size aliases for consistency
+// (already defined above, just referencing them)
+
+// Spacing aliases for consistency
+$spacing-xs: $space-xs;
+$spacing-sm: $space-sm;
+$spacing-md: $space-md;
+$spacing-lg: $space-lg;
+$spacing-xl: $space-xl;
+$spacing-2xl: $space-2xl;
+$spacing-3xl: $space-3xl;
+
+// MIXINS
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin card {
+  background: $color-card-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-xl;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: darken($color-border, 5%);
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+@mixin button-reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+@mixin button-base {
+  @include button-reset;
+  border-radius: $radius-md;
+  padding: $space-md $space-lg;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+  transition: all $transition-base;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-md;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  background: $color-accent-blue;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-blue-hover;
+  }
+}
+
+@mixin button-secondary {
+  background: $color-border;
+  color: $color-primary-text;
+
+  &:hover:not(:disabled) {
+    background: $color-hover-bg;
+  }
+}
+
+@mixin button-danger {
+  background: $color-danger;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: $color-danger-hover;
+  }
+}
+
+@mixin button-success {
+  background: $color-success;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: $color-success-hover;
+  }
+}
+
+@mixin input-base {
+  background: $color-secondary-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-primary-text;
+  padding: $space-md $space-lg;
+  font-size: $font-size-base;
+  font-family: $font-family;
+  transition: border-color $transition-base;
+
+  &::placeholder {
+    color: $color-muted-text;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent-blue;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin skeleton {
+  background: linear-gradient(
+    90deg,
+    $color-card-bg 25%,
+    $color-border 37%,
+    $color-card-bg 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+@mixin responsive-sm {
+  @media (max-width: calc($breakpoint-sm - 1px)) {
+    @content;
+  }
+}
+
+@mixin responsive-md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin responsive-lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin responsive-xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}

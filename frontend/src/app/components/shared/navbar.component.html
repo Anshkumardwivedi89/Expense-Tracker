@@ -1,0 +1,101 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo/Brand -->
+    <div class="nav-brand">
+      <span class="logo-icon">💰</span>
+      <span class="app-title">Expense Tracker</span>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+      <!-- Dashboard -->
+      <a
+        routerLink="/"
+        class="nav-link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <span class="nav-icon">📊</span>
+        <span class="nav-text">Dashboard</span>
+      </a>
+
+      <!-- Categories -->
+      <a
+        *ngIf="auth.loggedIn()"
+        routerLink="/categories"
+        class="nav-link"
+        routerLinkActive="active"
+      >
+        <span class="nav-icon">📂</span>
+        <span class="nav-text">Categories</span>
+      </a>
+
+      <!-- Profile -->
+      <a
+        *ngIf="auth.loggedIn()"
+        routerLink="/profile"
+        class="nav-link"
+        routerLinkActive="active"
+      >
+        <span class="nav-icon">👤</span>
+        <span class="nav-text">Profile</span>
+      </a>
+
+      <!-- Notifications with Badge -->
+      <a
+        *ngIf="auth.loggedIn()"
+        routerLink="/notifications"
+        class="nav-link notification-link"
+        routerLinkActive="active"
+      >
+        <span class="nav-icon">🔔</span>
+        <span class="nav-text">Notifications</span>
+        <span *ngIf="unreadCount > 0" class="notification-badge">
+          {{ unreadCount }}
+        </span>
+      </a>
+
+      <!-- Reports -->
+      <a
+        *ngIf="auth.loggedIn()"
+        routerLink="/reports"
+        class="nav-link"
+        routerLinkActive="active"
+      >
+        <span class="nav-icon">📈</span>
+        <span class="nav-text">Reports</span>
+      </a>
+
+      <!-- Spacer -->
+      <div class="nav-spacer"></div>
+
+      <!-- Auth Links -->
+      <a
+        *ngIf="!auth.loggedIn()"
+        routerLink="/login"
+        class="nav-link nav-link-secondary"
+        routerLinkActive="active"
+      >
+        <span class="nav-text">Login</span>
+      </a>
+
+      <a
+        *ngIf="!auth.loggedIn()"
+        routerLink="/register"
+        class="nav-link nav-link-primary"
+        routerLinkActive="active"
+      >
+        <span class="nav-text">Register</span>
+      </a>
+
+      <!-- Logout -->
+      <a
+        *ngIf="auth.loggedIn()"
+        (click)="logout()"
+        class="nav-link nav-link-danger"
+      >
+        <span class="nav-text">Logout</span>
+      </a>
+    </div>
+  </div>
+</nav>

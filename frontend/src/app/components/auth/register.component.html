@@ -1,0 +1,87 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <!-- Logo -->
+    <div class="auth-logo">
+      <span class="logo-icon">💰</span>
+    </div>
+
+    <!-- Title -->
+    <h1 class="auth-title">Expense Tracker</h1>
+    <p class="auth-subtitle">Create your account</p>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert-error">
+      <span class="alert-icon">❌</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="alert-success">
+      <span class="alert-icon">✓</span>
+      <span>{{ successMessage }}</span>
+    </div>
+
+    <!-- Form -->
+    <form (ngSubmit)="register()" class="auth-form">
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          class="form-control"
+          placeholder="Choose a username"
+          [readonly]="loading"
+          required
+          autocomplete="username"
+        />
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          class="form-control"
+          placeholder="Enter your email"
+          [readonly]="loading"
+          required
+          autocomplete="email"
+        />
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          class="form-control"
+          placeholder="Enter your password"
+          [readonly]="loading"
+          required
+          autocomplete="new-password"
+        />
+        <small class="form-hint">Minimum 4 characters</small>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        {{ loading ? '⏳ Creating account...' : '📝 Register' }}
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <p class="auth-footer">
+      Already have an account?
+      <a routerLink="/login" class="auth-link">Login here</a>
+    </p>
+  </div>
+</div>
