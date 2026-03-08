@@ -30,4 +30,12 @@ public class TransactionController {
                 userService.getCurrentUser(auth).getId()
         );
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id, Authentication auth) {
+        Transaction transaction = service.getById(id);
+        if (transaction != null && transaction.getUser().getId().equals(userService.getCurrentUser(auth).getId())) {
+            service.delete(id);
+        }
+    }
 }

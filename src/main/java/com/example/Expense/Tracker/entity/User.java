@@ -22,6 +22,8 @@ public class User {
 
     private String password;
 
+    private String phoneNumber;
+
     private boolean enabled = true;
 
 

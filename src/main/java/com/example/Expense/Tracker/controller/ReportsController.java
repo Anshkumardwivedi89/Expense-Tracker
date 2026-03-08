@@ -1,4 +1,5 @@
 package com.example.Expense.Tracker.controller;
+
 import com.example.Expense.Tracker.entity.TransactionType;
 import com.example.Expense.Tracker.repo.TransactionRepository;
 import com.example.Expense.Tracker.service.UserService;
@@ -19,6 +20,8 @@ public class ReportsController {
 
     private final TransactionRepository repo;
 
+    private final UserService userService;
+
     @GetMapping("/expense-by-category")
     public List<Map<String, Object>> expenseByCategory(
             @RequestParam int month,
@@ -31,5 +34,25 @@ public class ReportsController {
                         "amount", r[1]
                 ))
                 .toList();
+    }
+
+    @GetMapping("/income-vs-expense")
+    public Map<String, Double> incomeVsExpense(
+            Authentication auth,
+            @RequestParam int month,
+            @RequestParam int year) {
+
+        Long userId = userService.getCurrentUser(auth).getId();
+
+        Double income = repo.sumByTypeForMonth(userId, TransactionType.INCOME, month, year);
+        Double expense = repo.sumByTypeForMonth(userId, TransactionType.EXPENSE, month, year);
+
+        income = income == null ? 0.0 : income;
+        expense = expense == null ? 0.0 : expense;
+
+        return Map.of(
+                "income", income,
+                "expense", expense
+        );
     }
 }

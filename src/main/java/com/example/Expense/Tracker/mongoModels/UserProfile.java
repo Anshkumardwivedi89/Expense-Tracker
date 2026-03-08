@@ -21,6 +21,10 @@ public class UserProfile {
     @Id
     private String userId;
 
+    private String email;
+
+    private String phoneNumber;
+
     private String avatarUrl;
 
     private Map<String, Object> preferences;
