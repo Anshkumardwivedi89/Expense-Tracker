@@ -3,17 +3,15 @@ FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-# Copy pom.xml
+# Copy pom.xml and download dependencies
 COPY pom.xml .
-
-# Download dependencies (this layer caches if pom.xml hasn't changed)
-RUN mvn dependency:resolve
+RUN mvn clean verify --fail-never
 
 # Copy source code
 COPY src ./src
 
 # Build the application
-RUN mvn clean package -DskipTests -q
+RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
 FROM eclipse-temurin:17-jre-alpine
