@@ -115,6 +115,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- AWS SDK for SES Email -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>ses</artifactId>
+            <version>2.26.0</version>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

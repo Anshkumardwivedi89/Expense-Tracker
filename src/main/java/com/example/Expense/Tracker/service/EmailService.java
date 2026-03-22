@@ -3,20 +3,16 @@ package com.example.Expense.Tracker.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
+import software.amazon.awssdk.services.ses.SesClient;
+import software.amazon.awssdk.services.ses.model.*;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final SesClient sesClient;
 
     @Value("${app.email.from}")
     private String fromEmail;
@@ -25,41 +21,47 @@ public class EmailService {
     private String fromName;
 
     /**
-     * Send a simple text email
+     * Send a simple text email using AWS SES
      */
     public void sendSimpleEmail(String to, String subject, String body) {
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            SendEmailRequest request = SendEmailRequest.builder()
+                    .source(fromName + " <" + fromEmail + ">")
+                    .destination(Destination.builder().toAddresses(to).build())
+                    .message(Message.builder()
+                            .subject(Content.builder().data(subject).charset("UTF-8").build())
+                            .body(Body.builder()
+                                    .text(Content.builder().data(body).charset("UTF-8").build())
+                                    .build())
+                            .build())
+                    .build();
 
-            helper.setFrom(fromEmail, fromName);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(body, false);
-
-            mailSender.send(message);
+            sesClient.sendEmail(request);
             log.info("Simple email sent to: {}", to);
-        } catch (MessagingException | UnsupportedEncodingException e) {
+        } catch (SesException e) {
             log.error("Failed to send simple email to {}: {}", to, e.getMessage(), e);
         }
     }
 
     /**
-     * Send an HTML email
+     * Send an HTML email using AWS SES
      */
     public void sendHtmlEmail(String to, String subject, String htmlBody) {
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            SendEmailRequest request = SendEmailRequest.builder()
+                    .source(fromName + " <" + fromEmail + ">")
+                    .destination(Destination.builder().toAddresses(to).build())
+                    .message(Message.builder()
+                            .subject(Content.builder().data(subject).charset("UTF-8").build())
+                            .body(Body.builder()
+                                    .html(Content.builder().data(htmlBody).charset("UTF-8").build())
+                                    .build())
+                            .build())
+                    .build();
 
-            helper.setFrom(fromEmail, fromName);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlBody, true); // true = HTML
-
-            mailSender.send(message);
+            sesClient.sendEmail(request);
             log.info("HTML email sent to: {}", to);
-        } catch (MessagingException | UnsupportedEncodingException e) {
+        } catch (SesException e) {
             log.error("Failed to send HTML email to {}: {}", to, e.getMessage(), e);
         }
     }
